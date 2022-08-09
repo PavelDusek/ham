@@ -1,0 +1,10 @@
+<html>
+	<body>
+		<table>
+			<tr><th>Timestamp</th><th>Name</th><th>Temperature</th><th>Humidity</th></tr>
+			{% for index, row in rows %}
+			<tr><td>{{row['timestamp']}}</td><td>{{row['name']}}</td><td>{{row['temperature']}}</td><td>{{row['humidity']}}</td></tr>
+			{% endfor %}
+		</table>
+	</body>
+</html>
