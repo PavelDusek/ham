@@ -20,13 +20,11 @@ def validate(db_file, name, token):
             return True
     return False
 
-@app.route("/cam")
-def cam():
-    return render_template("camera.html")
-
 @app.route('/')
 @app.route('/input')
 @app.route('/input/')
+@app.route("/cam")
+@app.route("/cam/")
 def index():
     return "No token."
 
@@ -35,6 +33,12 @@ def index():
 @app.route('/input/<variable>/')
 def index2(variable):
     return "No token."
+
+@app.route("/cam/<name>/<token>")
+def cam(name, token):
+    if not validate("read.csv", name, token):
+        return "False token."
+    return render_template("camera.html")
 
 @app.route("/input/<variable>/<name>/<token>", methods=['GET'])
 def write(variable, name, token):
