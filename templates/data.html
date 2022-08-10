@@ -1,9 +1,11 @@
 <html>
 	<body>
 		<table>
-			<tr><th>Timestamp</th><th>Name</th><th>Temperature</th><th>Humidity</th></tr>
+			<tr>{% for header in headers %}<th>{{header}}</th>{% endfor %}</tr>
 			{% for index, row in rows %}
-			<tr><td>{{row['timestamp']}}</td><td>{{row['name']}}</td><td>{{row['temperature']}}</td><td>{{row['humidity']}}</td></tr>
+			<tr>
+				{% for header in headers %}<td>{{row[header]}}</td>{% endfor %}
+			</tr>
 			{% endfor %}
 		</table>
 	</body>
