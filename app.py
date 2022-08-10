@@ -20,6 +20,10 @@ def validate(db_file, name, token):
             return True
     return False
 
+@app.route("/cam")
+def cam():
+    return render_template("camera.html")
+
 @app.route('/')
 @app.route('/input')
 @app.route('/input/')
