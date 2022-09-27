@@ -55,6 +55,15 @@ def write(variable, name, token):
     df.to_csv(f"{variable}.csv", index=False)
     return f"Writen data {name}, {token}, {value} to {variable}.csv"
 
+@app.route("/show/<variable>/<name>/<token>")
+def show(variable, name, token):
+    if not variable in variables:
+        return "incorrect action"
+    if not validate("read.csv", name, token):
+        return "False token."
+    df = pd.read_csv(f"{variable}.csv")
+    return render_template("show.html", rows = df.iterrows(), headers = df.columns)
+
 @app.route("/<variable>/<name>/<token>")
 def read(variable, name, token):
     if not variable in variables:
