@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	<style>
+		.dataChart { stroke: steelblue; fill: none; stroke-width: 3; }
+	</style>
 	<script src="https://d3js.org/d3.v5.min.js" defer></script>
 	<script language="javascript">
 		function drawChart() {
@@ -12,7 +15,12 @@
 			      width  = 0.9 * screen.width - margin.left - margin.right,
 			      height = 0.75 * screen.height - margin.top - margin.bottom;
 
-			const svg    = d3.select(".chart").append("svg");
+			const svg    = d3.select(".chart")
+					 .append("svg")
+					 .attr("width", width + margin.left + margin.right)
+					 .attr("height", height + margin.top + margin.bottom)
+					 .append("g")
+					 .attr("transform", "translate( " + margin.left + "," + margin.top + ")");
 			const values = data.map( d => d.value );
 			const time   = data.map( d => d.timestamp );
 
