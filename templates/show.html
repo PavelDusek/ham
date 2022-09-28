@@ -5,6 +5,7 @@
 		.dataChart { stroke: steelblue; fill: none; stroke-width: 3; }
 	</style>
 	<script src="https://d3js.org/d3.v5.min.js" defer></script>
+	<script src="https://cdn.jsdelivr.net/npm/d3-time-format@4" defer></script>
 	<script language="javascript">
 		function drawChart() {
 			const data = [
@@ -21,14 +22,12 @@
 					 .attr("height", height + margin.top + margin.bottom)
 					 .append("g")
 					 .attr("transform", "translate( " + margin.left + "," + margin.top + ")");
+			const tparse = d3.timeParse("%s");
 			const values = data.map( d => d.value );
-			const time   = data.map( d => d.timestamp );
+			const time   = data.map( function(d) { return tparse( Math.round(d.timestamp) ) } );
 
-			var xScale   = d3.scaleLinear().range(0, width);
-			var yScale   = d3.scaleLinear().range(height, 0);
-
-			xScale.domain( [d3.min( time   ), d3.max( time   ) ] ).range([ 0, width ]);
-			yScale.domain( [d3.min( values ), d3.max( values ) ] ).range([ height, 0]);
+			var xScale   = d3.scaleTime().domain( [d3.min( time   ), d3.max( time   ) ] ).range([ 0, width ]);
+			var yScale   = d3.scaleLinear().domain( [d3.min( values ), d3.max( values ) ] ).range([ height, 0]);
 
 			//xScale
 			svg.append("g")
@@ -46,7 +45,7 @@
 			   .data(data)
 			   .attr("class", "dataChart")
 			   .attr("d", d3.line()
-				   .x( function(d) {return xScale(d.timestamp) } )
+				   .x( function(d) {return xScale(tparse( Math.round(d.timestamp)) ) } )
 				   .y( function(d) {return yScale(d.value) } )
 				   ( data )
 			   );
